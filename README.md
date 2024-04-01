@@ -27,3 +27,9 @@ Who are the users?
 
 Link to Trello
   https://trello.com/b/igXgPRgq/crm
+
+
+Workflow
+* Join an assignment from todo's
+* write in the description the actions that are needed for complition
+* if this assignment defines a type that will be needed by others, make a mock for the type
