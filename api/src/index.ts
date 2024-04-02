@@ -15,7 +15,7 @@ app.get("/check", async (_, res) => {
   res.json({ status: "OK" });
 });
 
-app.post("/register", async (req, res) => {
+app.post("/registerLead", async (req, res) => {
   try {
     // add POST request code
 
