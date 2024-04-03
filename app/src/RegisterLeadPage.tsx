@@ -42,8 +42,7 @@ export function RegisterLeadPage() {
 
   return (
     <>
-      <h1>Interested in our services?</h1>
-      <p>Fill your information and we'll contact you as soon as possible</p>
+      <h1>Register a new lead</h1>
       <form className="registerForm" onSubmit={handleSubmit}>
         <div className="registerForm__field">
           <label htmlFor="firstName">First Name: </label>
