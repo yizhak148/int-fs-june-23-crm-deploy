@@ -1,6 +1,6 @@
 export interface Lead {
   id: string;
-  createdAt: Date;
+  createdAt: string;
   priority: "Low" | "Medium" | "High";
   stage:
     | "New"
