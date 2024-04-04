@@ -4,7 +4,6 @@ import express from "express";
 import cors from "cors";
 import { json } from "body-parser";
 import { getConnection, initConnection } from "./dbConnection";
-import { RowDataPacket } from "mysql2";
 
 const app = express();
 
@@ -66,14 +65,7 @@ app.post("/registerlead", async (req, res) => {
 app.get("/leads", async (_, res) => {
   try {
     const connection = getConnection();
-    const result = await connection.execute(`SELECT id FROM crm.leads`);
-
-    if (!result) {
-      res.status(404);
-      res.json({ error: "Data not found!" });
-      return;
-    }
-
+    const [result] = await connection.query(`SELECT * FROM crm.leads, crm.contactinfo, crm.companyinfo`);
     console.log(result);
 
     res.status(200);
