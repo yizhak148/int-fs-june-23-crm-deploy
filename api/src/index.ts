@@ -65,7 +65,7 @@ app.post("/registerlead", async (req, res) => {
 app.get("/leads", async (_, res) => {
   try {
     const connection = getConnection();
-    const [result] = await connection.query(`SELECT * FROM crm.leads, crm.contactinfo, crm.companyinfo`);
+    const [result] = await connection.query(`SELECT * FROM sql11696756.contactInfo, sql11696756.leads, sql11696756.companyInfo;`);
     console.log(result);
 
     res.status(200);
