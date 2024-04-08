@@ -1,0 +1,14 @@
+.leadsTable__leadInfo {
+gap: 2rem;
+    &__name {
+        text-transform: capitalize;
+    }
+}
+
+.leadsTable * {
+        border: 1px solid;
+}
+
+.leadsTable__leadInfo *, .leadsTable__headers * {
+    padding: 1ch;
+}

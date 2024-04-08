@@ -65,7 +65,10 @@ app.post("/registerlead", async (req, res) => {
 app.get("/leads", async (_, res) => {
   try {
     const connection = getConnection();
-    const [result] = await connection.query(`SELECT * FROM sql11696756.contactInfo, sql11696756.leads, sql11696756.companyInfo;`);
+    const [result] = await connection.query(`SELECT *
+    FROM contactInfo
+    JOIN leads ON contactInfo.leadId = leads.id
+    JOIN companyInfo ON leads.id = companyInfo.leadId;`);
     console.log(result);
 
     res.status(200);
