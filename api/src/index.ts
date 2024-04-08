@@ -9,6 +9,7 @@ const app = express();
 
 app.use(cors());
 app.use(json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/check", async (_, res) => {
   res.status(200);
@@ -62,14 +63,21 @@ app.post("/registerlead", async (req, res) => {
   }
 });
 
-app.get("/leads", async (_, res) => {
+app.get("/leads", async (req, res) => {
   try {
     const connection = getConnection();
-    const [result] = await connection.query(`SELECT *
+    const search = req.query.search && String(req.query.search);
+    const [result] = await connection.execute(
+      `SELECT *
     FROM contactInfo
     JOIN leads ON contactInfo.leadId = leads.id
-    JOIN companyInfo ON leads.id = companyInfo.leadId;`);
-    console.log(result);
+    JOIN companyInfo ON leads.id = companyInfo.leadId
+    ${search ? "WHERE firstName LIKE ? OR lastName LIKE ? OR email LIKE ?" : ""
+    }`,
+      [`${search}%`, `${search}%`, `${search}%`]
+    );
+    console.log("Query parameters:", req.query);
+    console.log("Search term:", search);
 
     res.status(200);
     res.json(result);

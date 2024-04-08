@@ -17,7 +17,7 @@ interface Lead {
     | "Contract Sent"
     | "Customer"
     | "Closed";
-  owner?: string; // Who's contacting this lead (id)
+  owner?: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -31,24 +31,30 @@ interface Lead {
 
 export function LeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const response = await server.get("http://localhost:3000/leads");
+        const response = await server.get(`http://localhost:3000/leads?search=${search}`);
         setLeads(response.data);
-        console.log(response.data);
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchLeads();
-  }, []);
+  }, [search]);
 
   return (
     <div>
       <h1>Browse Leads</h1>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search by name or email"
+      />
       <table className="leadsTable">
         <thead>
           <tr className="leadsTable__headers">
