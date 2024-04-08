@@ -10,6 +10,12 @@ const app = express();
 app.use(cors());
 app.use(json());
 
+app.get("/", async (_, res) => {
+  res.status(200);
+  res.send("hello world")
+  res.json({ status: "OK" });
+});
+
 app.get("/check", async (_, res) => {
   res.status(200);
   res.json({ status: "OK" });
