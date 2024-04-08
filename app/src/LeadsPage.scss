@@ -7,8 +7,18 @@ gap: 2rem;
 
 .leadsTable * {
         border: 1px solid;
+
+        & a {
+            border: none;
+            color: inherit;
+        }
 }
 
 .leadsTable__leadInfo *, .leadsTable__headers * {
     padding: 1ch;
+}
+
+.filter {
+    display: flex;
+    width: max-content;
 }
