@@ -11,9 +11,10 @@ app.use(cors());
 app.use(json());
 
 app.get("/", async (_, res) => {
-  res.send("hello world");
+  
   res.status(200);
   res.json({ status: "OK" });
+  res.send("hello world");
 });
 
 app.get("/check", async (_, res) => {
