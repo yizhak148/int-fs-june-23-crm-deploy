@@ -66,25 +66,39 @@ app.post("/registerlead", async (req, res) => {
 app.get("/leads", async (req, res) => {
   try {
     const connection = getConnection();
-    const search = req.query.search && String(req.query.search);
-    const [result] = await connection.execute(
-      `SELECT *
-    FROM contactInfo
-    JOIN leads ON contactInfo.leadId = leads.id
-    JOIN companyInfo ON leads.id = companyInfo.leadId
-    ${search ? "WHERE firstName LIKE ? OR lastName LIKE ? OR email LIKE ?" : ""
-    }`,
-      [`${search}%`, `${search}%`, `${search}%`]
-    );
+    const search = req.query.search ? String(req.query.search) : "";
+    const priority = req.query.priority ? String(req.query.priority) : "";
+    const stage = req.query.stage ? String(req.query.stage) : "";
+
+    let sqlQuery = `
+      SELECT *
+      FROM contactInfo
+      JOIN leads ON contactInfo.leadId = leads.id
+      JOIN companyInfo ON leads.id = companyInfo.leadId
+      WHERE (firstName LIKE ? OR lastName LIKE ? OR email LIKE ?)
+      AND (priority = ? OR ? = '')
+      AND (stage = ? OR ? = '')
+    `;
+
+    const [result] = await connection.execute(sqlQuery, [
+      `${search}%`,
+      `${search}%`,
+      `${search}%`,
+      priority,
+      priority,
+      stage,
+      stage,
+    ]);
+
     console.log("Query parameters:", req.query);
     console.log("Search term:", search);
+    console.log("Priority:", priority);
 
-    res.status(200);
-    res.json(result);
+
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
-    res.status(500);
-    res.json({ error: "something went wrong" });
+    res.status(500).json({ error: "something went wrong" });
   }
 });
 

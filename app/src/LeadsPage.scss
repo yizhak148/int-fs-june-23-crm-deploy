@@ -21,4 +21,20 @@ gap: 2rem;
 .filter {
     display: flex;
     width: max-content;
+    align-items: baseline;
+
+    &__search {
+        height: 1.2rem;
+    }
+
+    &__label {
+        text-transform: capitalize;
+        margin-inline-start: 1ch;
+    }
+
+    &__select {
+        margin-inline: 1ch;
+        height: 1.5rem;
+        border-radius: 4px;
+    }
 }
