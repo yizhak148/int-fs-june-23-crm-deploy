@@ -1,0 +1,24 @@
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.title {
+    color: teal;
+    margin-bottom: 1rem;
+    border: 1px solid;
+    border-radius: 14px;
+    padding: 0.8rem;
+}
+
+.detailsContainer {
+    display: flex;
+    gap: 4rem;
+}
