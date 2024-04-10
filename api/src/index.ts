@@ -90,11 +90,6 @@ app.get("/leads", async (req, res) => {
       stage,
     ]);
 
-    console.log("Query parameters:", req.query);
-    console.log("Search term:", search);
-    console.log("Priority:", priority);
-
-
     res.status(200).json(result);
   } catch (err) {
     console.error(err);
