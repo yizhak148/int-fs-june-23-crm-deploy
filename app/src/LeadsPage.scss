@@ -1,0 +1,40 @@
+.leadsTable__leadInfo {
+gap: 2rem;
+    &__name {
+        text-transform: capitalize;
+    }
+}
+
+.leadsTable * {
+        border: 1px solid;
+
+        & a {
+            border: none;
+            color: inherit;
+        }
+}
+
+.leadsTable__leadInfo *, .leadsTable__headers * {
+    padding: 1ch;
+}
+
+.filter {
+    display: flex;
+    width: max-content;
+    align-items: baseline;
+
+    &__search {
+        height: 1.2rem;
+    }
+
+    &__label {
+        text-transform: capitalize;
+        margin-inline-start: 1ch;
+    }
+
+    &__select {
+        margin-inline: 1ch;
+        height: 1.5rem;
+        border-radius: 4px;
+    }
+}
