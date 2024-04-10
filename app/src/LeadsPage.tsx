@@ -1,10 +1,7 @@
 import axios from "axios";
 import "./LeadsPage.scss";
 import { useState, useEffect, PropsWithChildren } from "react";
-
-const server = axios.create({
-  baseURL: "http://localhost:5173",
-});
+import { Link } from "react-router-dom";
 
 interface Lead {
   id: string;
@@ -38,7 +35,7 @@ export function LeadsPage() {
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const response = await server.get(
+        const response = await axios.get(
           `http://localhost:3000/leads?search=${search}${
             priority ? `&priority=${priority}` : ""
           }${stage ? `&stage=${stage}` : ""}`
@@ -63,13 +60,17 @@ export function LeadsPage() {
           placeholder="Search by name or email"
           className="filter__search"
         />
-        <Select filterCategory="priority" onChange={setPriority} value={priority}>
+        <Select
+          filterCategory="priority"
+          onChange={setPriority}
+          value={priority}
+        >
           <option value="">All</option>
           <option value="low">Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </Select>
-        <Select filterCategory="stage" onChange={setStage}>
+        <Select filterCategory="stage" onChange={setStage} value={stage}>
           <option value="">All</option>
           <option value="new">New</option>
           <option value="acknowledged">Acknowledged</option>
@@ -95,9 +96,9 @@ export function LeadsPage() {
           {leads.map((lead, index) => (
             <tr key={index} className="leadsTable__leadInfo">
               <td className="leadsTable__leadInfo__name">
-                <a href={`leads/${lead.id}`}>
+                <Link to={`/${lead.id}`}>
                   {lead.firstName} {lead.lastName}
-                </a>
+                </Link>
               </td>
               <td>{lead.companyName}</td>
               <td>{lead.email}</td>
