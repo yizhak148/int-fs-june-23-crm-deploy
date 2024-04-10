@@ -68,6 +68,40 @@ app.post("/registerlead", async (req, res) => {
   }
 });
 
+app.get("/leads", async (req, res) => {
+  try {
+    const connection = getConnection();
+    const search = req.query.search ? String(req.query.search) : "";
+    const priority = req.query.priority ? String(req.query.priority) : "";
+    const stage = req.query.stage ? String(req.query.stage) : "";
+
+    let sqlQuery = `
+      SELECT *
+      FROM contactInfo
+      JOIN leads ON contactInfo.leadId = leads.id
+      JOIN companyInfo ON leads.id = companyInfo.leadId
+      WHERE (firstName LIKE ? OR lastName LIKE ? OR email LIKE ?)
+      AND (priority = ? OR ? = '')
+      AND (stage = ? OR ? = '')
+    `;
+
+    const [result] = await connection.execute(sqlQuery, [
+      `${search}%`,
+      `${search}%`,
+      `${search}%`,
+      priority,
+      priority,
+      stage,
+      stage,
+    ]);
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "something went wrong" });
+  }
+});
+
 async function init() {
   await initConnection();
   app.listen(3000, () => console.log("Server running on localhost:3000"));
