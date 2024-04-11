@@ -106,7 +106,7 @@ export function LeadsPage() {
               <td>{lead.phoneNumber}</td>
               <td>{lead.priority}</td>
               <td>{lead.stage}</td>
-              <td>{lead.createdAt}</td>
+              <td>{lead.createdAt?.replace("T", " at ").replace(".000Z", "")}</td>
             </tr>
           ))}
         </tbody>
