@@ -16,7 +16,6 @@ export function RegisterLeadPage() {
 
     const newLead: Lead = {
       id: crypto.randomUUID(),
-      createdAt: new Date().toISOString().split("T")[0],
       priority: "Low",
       stage: "New",
       contactInfo: {
