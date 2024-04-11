@@ -3,6 +3,7 @@ import { Lead } from "./Lead.model";
 import axios from "axios";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
+import { VERCEL_URL } from "../lib/globals";
 
 export function LeadDetailsPage() {
   const { id } = useParams();
@@ -11,7 +12,7 @@ export function LeadDetailsPage() {
   useEffect(() => {
     async function getDetails() {
       try {
-        const res = await axios.get<Lead>(`http://localhost:3000/leads/${id}`);
+        const res = await axios.get<Lead>(`${VERCEL_URL}leads/${id}`);
         setLeadDetails(res.data);
       } catch (error) {
         console.error("Error fetching lead details:", error);

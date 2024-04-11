@@ -1,0 +1,1 @@
+export const VERCEL_URL = "https://int-fs-june-23-crm-deploy-try5.vercel.app/"

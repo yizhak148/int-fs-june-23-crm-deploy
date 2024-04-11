@@ -2,6 +2,7 @@ import axios from "axios";
 import "./LeadsPage.scss";
 import { useState, useEffect, PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
+import { VERCEL_URL } from "../lib/globals";
 
 interface Lead {
   id: string;
@@ -36,7 +37,7 @@ export function LeadsPage() {
     const fetchLeads = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/leads?search=${search}${
+          `${VERCEL_URL}/leads?search=${search}${
             priority ? `&priority=${priority}` : ""
           }${stage ? `&stage=${stage}` : ""}`
         );
