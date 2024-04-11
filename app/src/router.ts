@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import { RegisterLeadPage } from "./RegisterLeadPage";
 import { LeadsPage } from "./LeadsPage";
-import { LeadDetailsPage } from "./LeadDetailsPage";
+import { LeadDetailsPage, loader as leadLoader } from "./LeadDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -14,5 +14,6 @@ export const router = createBrowserRouter([
   {
     path: "/leads/:id",
     Component: LeadDetailsPage,
+    loader: leadLoader
   },
 ]);
