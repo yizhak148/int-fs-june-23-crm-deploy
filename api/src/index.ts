@@ -69,29 +69,33 @@ app.get("/leads/:id", async (req, res) => {
 
     const [details]: any[] = await connection.execute(
       `SELECT *
-      FROM leads, contactInfo, companyInfo
+      FROM leads
+      JOIN contactInfo ON leads.id = contactInfo.leadId
+      JOIN companyInfo ON leads.id = companyInfo.leadId
       WHERE id = ?`,
       [req.params.id]
     );
 
+    const [lead] = details;
+
     const leadDetails: Lead = {
-      id: details[0].id,
-      createdAt: details[0].createdAt,
-      priority: details[0].priority,
-      stage: details[0].stage,
-      owner: details[0].owner,
+      id: lead.id,
+      createdAt: lead.createdAt,
+      priority: lead.priority,
+      stage: lead.stage,
+      owner: lead.owner,
       contactInfo: {
-        firstName: details[0].firstName,
-        lastName: details[0].lastName,
-        phoneNumber: details[0].phoneNumber,
-        email: details[0].email,
-        jobTitle: details[0].jobTitle,
+        firstName: lead.firstName,
+        lastName: lead.lastName,
+        phoneNumber: lead.phoneNumber,
+        email: lead.email,
+        jobTitle: lead.jobTitle,
       },
       companyInfo: {
-        companyName: details[0].companyName,
-        sector: details[0].sector,
-        employeeCount: details[0].employeeCount,
-        address: details[0].address,
+        companyName: lead.companyName,
+        sector: lead.sector,
+        employeeCount: lead.employeeCount,
+        address: lead.address,
       },
     };
 
@@ -100,7 +104,7 @@ app.get("/leads/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500);
-    res.json({ error: "something went wrong" });
+    res.json({ error: "Couldn't get lead details" });
   }
 });
 

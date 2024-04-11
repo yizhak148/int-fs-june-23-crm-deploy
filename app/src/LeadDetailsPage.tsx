@@ -4,10 +4,6 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 
-const server = axios.create({
-  baseURL: "http://localhost:3000",
-});
-
 export function LeadDetailsPage() {
   const { id } = useParams();
   const [leadDetails, setLeadDetails] = useState<Lead | null>(null);
@@ -15,7 +11,7 @@ export function LeadDetailsPage() {
   useEffect(() => {
     async function getDetails() {
       try {
-        const res = await server.get<Lead>(`http://localhost:3000/leads/${id}`);
+        const res = await axios.get<Lead>(`http://localhost:3000/leads/${id}`);
         setLeadDetails(res.data);
       } catch (error) {
         console.error("Error fetching lead details:", error);
