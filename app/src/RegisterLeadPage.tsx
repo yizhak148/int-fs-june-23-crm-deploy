@@ -34,7 +34,7 @@ export function RegisterLeadPage() {
     };
 
     try {
-      await server.post("/registerlead", newLead);
+      await server.post("/leads/registerlead", newLead);
     } catch (err) {
       console.error(err);
     }
