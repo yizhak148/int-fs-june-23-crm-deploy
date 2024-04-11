@@ -14,6 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/leads", leadsRouter);
 
+app.get("/", async (_, res) => {
+  
+  res.status(200).send("hello world!!!!!!!")
+  //res.json({ status: "OK" });
+});
+
 app.get("/check", async (_, res) => {
   res.status(200);
   res.json({ status: "OK" });
@@ -25,3 +31,5 @@ async function init() {
 }
 
 init();
+
+module.exports = app

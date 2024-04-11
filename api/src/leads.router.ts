@@ -40,15 +40,15 @@ router.get("/", async (req, res) => {
 
 router.post("/registerlead", async (req, res) => {
   try {
-    const { id, createdAt, priority, stage, contactInfo, companyInfo } =
+    const { id, priority, stage, contactInfo, companyInfo } =
       req.body;
 
     const connection = getConnection();
 
     await connection.execute(
       `INSERT INTO leads (id, createdAt, priority, stage)
-      VALUES (?, ?, ?, ?)`,
-      [id, createdAt, priority, stage]
+      VALUES (?, NOW(), ?, ?)`,
+      [id, priority, stage]
     );
 
     await connection.execute(

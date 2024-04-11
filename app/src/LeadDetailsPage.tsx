@@ -5,6 +5,7 @@ import { LoaderFunctionArgs, useLoaderData } from "react-router";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
+  
   const res = await axios.get<Lead>(`http://localhost:3000/leads/${id}`);
 
   return res.data;
@@ -26,7 +27,7 @@ export function LeadDetailsPage() {
       <div className="detailsContainer">
         <ul>
           <li>ID: {leadDetails.id}</li>
-          <li>Created at {leadDetails.createdAt.split("T")[0]}</li>
+          <li>Created at {leadDetails.createdAt?.split("T")[0]}</li>
           <li>{leadDetails.priority} Priority</li>
           <li>{leadDetails.stage}</li>
           <li>{leadDetails.owner ? leadDetails.owner : "NO OWNER"}</li>
