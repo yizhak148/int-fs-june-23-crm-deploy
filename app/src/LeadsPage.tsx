@@ -35,11 +35,9 @@ export function LeadsPage() {
   useEffect(() => {
     const fetchLeads = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/leads?search=${search}${
-            priority ? `&priority=${priority}` : ""
-          }${stage ? `&stage=${stage}` : ""}`
-        );
+        const response = await axios.get(`http://localhost:3000/leads`, {
+          params: { search, priority, stage },
+        });
         setLeads(response.data);
       } catch (err) {
         console.error(err);
@@ -79,7 +77,9 @@ export function LeadsPage() {
           <option value="customer">Customer</option>
           <option value="closed">Closed</option>
         </Select>
-        <Link to={"/leads/registerlead"} className="newLeadLink"><button className="newLeadLink__button">New Lead</button></Link>
+        <Link to={"/leads/registerlead"} className="newLeadLink">
+          <button className="newLeadLink__button">New Lead</button>
+        </Link>
       </menu>
       <table className="leadsTable">
         <thead>
@@ -106,7 +106,9 @@ export function LeadsPage() {
               <td>{lead.phoneNumber}</td>
               <td>{lead.priority}</td>
               <td>{lead.stage}</td>
-              <td>{lead.createdAt?.replace("T", " at ").replace(".000Z", "")}</td>
+              <td>
+                {lead.createdAt?.replace("T", " at ").replace(".000Z", "")}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -146,3 +148,35 @@ function Select({
     </div>
   );
 }
+
+const mymenu = `<menu className="filter">
+<input
+  type="text"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  placeholder="Search by name or email"
+  className="filter__search"
+/>
+<Select
+  filterCategory="priority"
+  onChange={setPriority}
+  value={priority}
+>
+  <option value="">All</option>
+  <option value="low">Low</option>
+  <option value="medium">Medium</option>
+  <option value="high">High</option>
+</Select>
+<Select filterCategory="stage" onChange={setStage} value={stage}>
+  <option value="">All</option>
+  <option value="new">New</option>
+  <option value="acknowledged">Acknowledged</option>
+  <option value="negotiation">Negotiation</option>
+  <option value="contract sent">Contract Sent</option>
+  <option value="customer">Customer</option>
+  <option value="closed">Closed</option>
+</Select>
+<Link to={"/leads/registerlead"} className="newLeadLink">
+  <button className="newLeadLink__button">New Lead</button>
+</Link>
+</menu>`;

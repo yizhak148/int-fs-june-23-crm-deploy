@@ -34,7 +34,7 @@ export function LeadDetailsPage() {
       <div className="detailsContainer">
         <ul>
           <li>ID: {leadDetails.id}</li>
-          <li>Created at {leadDetails.createdAt?.split("T")[0]}</li>
+          <li>Created at {leadDetails.createdAt?.replace("T", " at ").replace(".000Z", "")}</li>
           <li>{leadDetails.priority} Priority</li>
           <li>{leadDetails.stage}</li>
           <li>{leadDetails.owner ? leadDetails.owner : "NO OWNER"}</li>
