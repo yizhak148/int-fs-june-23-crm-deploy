@@ -12,7 +12,7 @@ export function LeadDetailsPage() {
   useEffect(() => {
     async function getDetails() {
       try {
-        const res = await axios.get<Lead>(`${VERCEL_URL}leads/${id}`);
+        const res = await axios.get<Lead>(`${VERCEL_URL}/leads/${id}`);
         setLeadDetails(res.data);
       } catch (error) {
         console.error("Error fetching lead details:", error);
