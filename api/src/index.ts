@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import { json } from "body-parser";
 import { getConnection, initConnection } from "./dbConnection";
+import { Lead } from "./Lead.model";
 
 const app = express();
 
@@ -63,6 +64,49 @@ app.post("/registerlead", async (req, res) => {
   }
 });
 
+app.get("/leads/:id", async (req, res) => {
+  try {
+    const connection = getConnection();
+
+    const [details]: any[] = await connection.execute(
+      `SELECT *
+      FROM leads
+      JOIN contactInfo ON leads.id = contactInfo.leadId
+      JOIN companyInfo ON leads.id = companyInfo.leadId
+      WHERE id = ?`,
+      [req.params.id]
+    );
+
+    const [lead] = details;
+
+    const leadDetails: Lead = {
+      id: lead.id,
+      createdAt: lead.createdAt,
+      priority: lead.priority,
+      stage: lead.stage,
+      owner: lead.owner,
+      contactInfo: {
+        firstName: lead.firstName,
+        lastName: lead.lastName,
+        phoneNumber: lead.phoneNumber,
+        email: lead.email,
+        jobTitle: lead.jobTitle,
+      },
+      companyInfo: {
+        companyName: lead.companyName,
+        sector: lead.sector,
+        employeeCount: lead.employeeCount,
+        address: lead.address,
+      },
+    };
+
+    res.status(200);
+    res.json(leadDetails);
+  } catch (err) {
+    console.error(err);
+    res.status(500);
+    res.json({ error: "Couldn't get lead details" });
+ 
 app.get("/leads", async (req, res) => {
   try {
     const connection = getConnection();
