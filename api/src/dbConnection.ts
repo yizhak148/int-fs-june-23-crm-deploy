@@ -12,9 +12,9 @@ export function getConnection() {
 
 export async function initConnection() {
     connection = await createConnection({
-        host: "sql11.freesqldatabase.com",
-        user: "sql11696756",
-        password: "8BelbyyTNx",
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
         database: "sql11696756"
     });
 }
