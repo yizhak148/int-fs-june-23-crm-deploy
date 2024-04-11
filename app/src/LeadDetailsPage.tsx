@@ -5,13 +5,11 @@ import { LoaderFunctionArgs, useLoaderData } from "react-router";
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
-  console.log(id);
-  const res = await axios.get<Lead>(
-    `http://localhost:3000/leads/${id}`);
+  
+  const res = await axios.get<Lead>(`http://localhost:3000/leads/${id}`);
 
   return res.data;
 }
-
 
 export function LeadDetailsPage() {
   const leadDetails = useLoaderData() as Lead;
