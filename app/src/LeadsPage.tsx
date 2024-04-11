@@ -1,7 +1,11 @@
 import axios from "axios";
 import "./LeadsPage.scss";
-import { useState, useEffect, PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  LoaderFunctionArgs,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 
 interface Lead {
   id: string;
@@ -26,57 +30,24 @@ interface Lead {
   address?: string;
 }
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const { search } = new URL(request.url);
+  const res = await axios.get(`http://localhost:3000/leads${search}`);
+
+  console.log(res.data);
+  console.log(search);
+  return res.data;
+}
+
 export function LeadsPage() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [search, setSearch] = useState<string>("");
-  const [priority, setPriority] = useState<string>("");
-  const [stage, setStage] = useState<string>("");
-
-  useEffect(() => {
-    const fetchLeads = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/leads`, {
-          params: { search, priority, stage },
-        });
-        setLeads(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchLeads();
-  }, [search, priority, stage]);
+  const leads = useLoaderData() as Lead[];
 
   return (
     <div>
       <h1>Browse Leads</h1>
       <menu className="filter">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by name or email"
-          className="filter__search"
-        />
-        <Select
-          filterCategory="priority"
-          onChange={setPriority}
-          value={priority}
-        >
-          <option value="">All</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-        </Select>
-        <Select filterCategory="stage" onChange={setStage} value={stage}>
-          <option value="">All</option>
-          <option value="new">New</option>
-          <option value="acknowledged">Acknowledged</option>
-          <option value="negotiation">Negotiation</option>
-          <option value="contract sent">Contract Sent</option>
-          <option value="customer">Customer</option>
-          <option value="closed">Closed</option>
-        </Select>
+        <Search />
+        <Filter />
         <Link to={"/leads/registerlead"} className="newLeadLink">
           <button className="newLeadLink__button">New Lead</button>
         </Link>
@@ -117,66 +88,75 @@ export function LeadsPage() {
   );
 }
 
-type FilterCategory = "stage" | "priority";
+function Search() {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-type SelectProps = {
-  filterCategory: FilterCategory;
-  onChange: (value: string) => void;
-  value: string;
-};
-
-function Select({
-  filterCategory,
-  value,
-  onChange,
-  children,
-}: PropsWithChildren<SelectProps>) {
   return (
-    <div>
-      <label htmlFor={filterCategory} className="filter__label">
-        {filterCategory}
-      </label>
-      <select
-        name={filterCategory}
-        id={filterCategory}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="filter__select"
-      >
-        {children}
-      </select>
-    </div>
+    <form>
+      <label htmlFor="search">Search</label>
+      <input
+        className="filter__search"
+        id="search"
+        type="search"
+        value={searchParams.get("search") ?? ""}
+        onInput={(e) => {
+          const nextSearchParams = new URLSearchParams(searchParams);
+
+          nextSearchParams.set("search", e.currentTarget.value);
+
+          setSearchParams(nextSearchParams, { replace: true });
+        }}
+      />
+    </form>
   );
 }
 
-const mymenu = `<menu className="filter">
-<input
-  type="text"
-  value={search}
-  onChange={(e) => setSearch(e.target.value)}
-  placeholder="Search by name or email"
-  className="filter__search"
-/>
-<Select
-  filterCategory="priority"
-  onChange={setPriority}
-  value={priority}
->
-  <option value="">All</option>
-  <option value="low">Low</option>
-  <option value="medium">Medium</option>
-  <option value="high">High</option>
-</Select>
-<Select filterCategory="stage" onChange={setStage} value={stage}>
-  <option value="">All</option>
-  <option value="new">New</option>
-  <option value="acknowledged">Acknowledged</option>
-  <option value="negotiation">Negotiation</option>
-  <option value="contract sent">Contract Sent</option>
-  <option value="customer">Customer</option>
-  <option value="closed">Closed</option>
-</Select>
-<Link to={"/leads/registerlead"} className="newLeadLink">
-  <button className="newLeadLink__button">New Lead</button>
-</Link>
-</menu>`;
+function Filter() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  return (
+    <form>
+      <label htmlFor="stage">Stage</label>
+      <select
+        name="stage"
+        id="stage"
+        onChange={(e) => {
+          const nextSearchParams = new URLSearchParams(searchParams);
+
+          nextSearchParams.set("stage", e.currentTarget.value);
+
+          setSearchParams(nextSearchParams, { replace: true });
+        }}
+        value={searchParams.get("stage") ?? ""}
+        className="filter__select"
+      >
+        <option value="">All</option>
+        <option value="new">New</option>
+        <option value="acknowledged">Acknowledged</option>
+        <option value="negotiation">Negotiation</option>
+        <option value="contract sent">Contract Sent</option>
+        <option value="customer">Customer</option>
+        <option value="closed">Closed</option>
+      </select>
+      <label htmlFor="priority">Priority</label>
+      <select
+        name="priority"
+        id="priority"
+        onChange={(e) => {
+          const nextSearchParams = new URLSearchParams(searchParams);
+
+          nextSearchParams.set("priority", e.currentTarget.value);
+
+          setSearchParams(nextSearchParams, { replace: true });
+        }}
+        value={searchParams.get("priority") ?? ""}
+        className="filter__select"
+      >
+        <option value="">All</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </form>
+  );
+}
