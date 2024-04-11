@@ -1,0 +1,62 @@
+.leadsTable__leadInfo {
+    gap: 2rem;
+
+    &__name {
+        text-transform: capitalize;
+    }
+}
+
+.leadsTable * {
+    border: 1px solid;
+
+    & a {
+        border: none;
+        color: inherit;
+    }
+}
+
+.leadsTable__leadInfo *,
+.leadsTable__headers * {
+    padding: 1ch;
+}
+
+.filter {
+    display: flex;
+    align-items: baseline;
+    padding-inline-start: 0;
+
+    &__search {
+        height: 1.2rem;
+    }
+
+    &__label {
+        text-transform: capitalize;
+        margin-inline-start: 2ch;
+    }
+
+    &__select {
+        margin-inline-start: 1ch;
+        height: 1.5rem;
+        border-radius: 4px;
+    }
+}
+
+.newLeadLink {
+    height: 2rem;
+    margin-inline-start: auto;
+    scale: .9;
+    transition: all 200ms ease;
+
+    &:hover {
+        scale: 1;
+    }
+
+    &>.newLeadLink__button {
+        transition: all 200ms ease;
+    }
+    
+    &:hover>.newLeadLink__button {
+        color: #535bf2;
+        scale: 1;
+    }
+}
