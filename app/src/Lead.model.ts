@@ -7,7 +7,7 @@ export interface Lead {
     | "Acknowledged"
     | "Negotiation"
     | "Contract Sent"
-    | "Won"
+    | "Customer"
     | "Closed";
   owner?: string;
   contactInfo: {
