@@ -9,7 +9,7 @@ export interface Lead {
     | "Contract Sent"
     | "Customer"
     | "Closed";
-  owner?: string; // Who's contacting this lead (id)
+  owner?: string;
   contactInfo: {
     firstName: string;
     lastName: string;

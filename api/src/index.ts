@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import { json } from "body-parser";
 import { initConnection } from "./dbConnection";
-import { router as leadsRouter } from "./leads.Router";
+import { router as leadsRouter } from "./leads.router";
 
 const app = express();
 

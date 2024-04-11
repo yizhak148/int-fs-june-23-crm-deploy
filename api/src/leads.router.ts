@@ -91,14 +91,14 @@ router.get("/:id", async (req, res) => {
 
     const [details]: any[] = await connection.execute(
       `SELECT *
-        FROM contactInfo
-         JOIN leads ON contactInfo.leadId = leads.id
-         JOIN companyInfo ON leads.id = companyInfo.leadId
-        WHERE id = ?`,
+      FROM leads
+      JOIN contactInfo ON leads.id = contactInfo.leadId
+      JOIN companyInfo ON leads.id = companyInfo.leadId
+      WHERE id = ?`,
       [req.params.id]
     );
 
-    const lead = details[0];
+    const [lead] = details;
 
     const leadDetails: Lead = {
       id: lead.id,
@@ -126,6 +126,6 @@ router.get("/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500);
-    res.json({ error: "something went wrong" });
+    res.json({ error: "Couldn't get lead details" });
   }
 });
