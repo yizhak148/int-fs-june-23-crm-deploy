@@ -79,6 +79,7 @@ export function LeadsPage() {
           <option value="customer">Customer</option>
           <option value="closed">Closed</option>
         </Select>
+        <Link to={"/leads/registerlead"} className="newLeadLink"><button className="newLeadLink__button">New Lead</button></Link>
       </menu>
       <table className="leadsTable">
         <thead>
@@ -96,7 +97,7 @@ export function LeadsPage() {
           {leads.map((lead, index) => (
             <tr key={index} className="leadsTable__leadInfo">
               <td className="leadsTable__leadInfo__name">
-                <Link to={`/${lead.id}`}>
+                <Link to={`/leads/${lead.id}`}>
                   {lead.firstName} {lead.lastName}
                 </Link>
               </td>

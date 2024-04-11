@@ -9,11 +9,10 @@ export const router = createBrowserRouter([
     index: true,
     Component: App,
   },
-  { path: "/registerLead", Component: RegisterLeadPage },
+  { path: "/leads", Component: LeadsPage },
+  { path: "/leads/registerLead", Component: RegisterLeadPage },
   {
     path: "/leads/:id",
     Component: LeadDetailsPage,
   },
-  { path: "/leads",
-    Component: LeadsPage
 ]);
