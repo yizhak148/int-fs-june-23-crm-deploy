@@ -3,10 +3,6 @@ import "./RegisterLeadPage.scss";
 import { Lead } from "./Lead.model";
 import axios from "axios";
 
-const server = axios.create({
-  baseURL: "https://int-fs-june-23-crm-deploy-try5.vercel.app",
-});
-
 export function RegisterLeadPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +29,7 @@ export function RegisterLeadPage() {
     };
 
     try {
-      await server.post("/leads/registerlead", newLead);
+      await axios.post("https://int-fs-june-23-crm-deploy-try5.vercel.app/leads/registerlead", newLead);
     } catch (err) {
       console.error(err);
     }
