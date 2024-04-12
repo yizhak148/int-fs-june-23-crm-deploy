@@ -4,7 +4,7 @@ import { Lead } from "./Lead.model";
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: "https://int-fs-june-23-crm-deploy-try5.vercel.app",
+  baseURL: "https://int-fs-june-23-crm-deploy-q7fr.vercel.app",
 });
 
 export function RegisterLeadPage() {
