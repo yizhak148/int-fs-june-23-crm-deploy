@@ -6,7 +6,7 @@ import { LoaderFunctionArgs, useLoaderData } from "react-router";
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
   
-  const res = await axios.get<Lead>(`http://localhost:3000/leads/${id}`);
+  const res = await axios.get<Lead>(`https://int-fs-june-23-crm-deploy-try5.vercel.app/leads/${id}`);
 
   return res.data;
 }

@@ -32,7 +32,7 @@ interface Lead {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { search } = new URL(request.url);
-  const res = await axios.get(`http://localhost:3000/leads${search}`);
+  const res = await axios.get(`https://int-fs-june-23-crm-deploy-try5.vercel.app/leads${search}`);
 
   console.log(res.data);
   console.log(search);
