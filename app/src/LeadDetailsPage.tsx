@@ -1,15 +1,15 @@
 import "./LeadDetailsPage.scss";
 import { Lead } from "./Lead.model";
 import axios from "axios";
-import { useParams } from "react-router";
-import { VERCEL_URL } from "../lib/globals";
 import { LoaderFunctionArgs, useLoaderData } from "react-router";
-
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const { id } = params;
   
   const res = await axios.get<Lead>(`http://localhost:3000/leads/${id}`);
+
+  return res.data;
+}
 
 export function LeadDetailsPage() {
   const leadDetails = useLoaderData() as Lead;

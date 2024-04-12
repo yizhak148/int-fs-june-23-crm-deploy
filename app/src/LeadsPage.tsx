@@ -1,17 +1,11 @@
 import axios from "axios";
 import "./LeadsPage.scss";
-
-import { useState, PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { VERCEL_URL } from "../lib/globals";
-=======
 import {
   Link,
   LoaderFunctionArgs,
   useLoaderData,
   useSearchParams,
 } from "react-router-dom";
-
 
 interface Lead {
   id: string;
@@ -40,6 +34,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const { search } = new URL(request.url);
   const res = await axios.get(`http://localhost:3000/leads${search}`);
 
+  console.log(res.data);
+  console.log(search);
+  return res.data;
+}
 
 export function LeadsPage() {
   const leads = useLoaderData() as Lead[];

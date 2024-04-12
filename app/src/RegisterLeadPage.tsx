@@ -2,10 +2,9 @@ import { FormEvent } from "react";
 import "./RegisterLeadPage.scss";
 import { Lead } from "./Lead.model";
 import axios from "axios";
-import { VERCEL_URL } from "../lib/globals";
 
 const server = axios.create({
-  baseURL: `${VERCEL_URL}`,
+  baseURL: "https://int-fs-june-23-crm-deploy-try5.vercel.app",
 });
 
 export function RegisterLeadPage() {
